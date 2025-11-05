@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
 
 import { env } from "@/config";
@@ -33,7 +34,8 @@ export const errorHandler: ErrorRequestHandler = (
 
   res.status(500).json({
     status: "error",
-    message: env.NODE_ENV === "production" ? "Internal server error" : err.message,
+    message:
+      env.NODE_ENV === "production" ? "Internal server error" : err.message,
     ...(env.NODE_ENV === "development" && { stack: err.stack }),
   });
 };
@@ -44,4 +46,3 @@ export const notFoundHandler = (req: Request, res: Response) => {
     message: `Route ${req.originalUrl} not found`,
   });
 };
-

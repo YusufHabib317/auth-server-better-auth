@@ -12,13 +12,11 @@ export const createApp = (): Application => {
 
   // Security middleware
   app.use(helmet());
-  
+
   // CORS configuration
   app.use(
     cors({
-      origin: env.NODE_ENV === "production" 
-        ? [env.BETTER_AUTH_URL] 
-        : true,
+      origin: env.NODE_ENV === "production" ? [env.BETTER_AUTH_URL] : true,
       credentials: true,
     })
   );
@@ -34,12 +32,25 @@ export const createApp = (): Application => {
     app.use(morgan("combined"));
   }
 
+  // Root welcome endpoint
+  app.get("/", (_req, res) => {
+    res.json({
+      name: "Kasroad Auth Server",
+      version: "1.0.0",
+      status: "ready",
+      endpoints: {
+        health: "/health",
+        api: "/api",
+      },
+    });
+  });
+
   // Health check endpoint
   app.get("/health", (req, res) => {
-    res.json({ 
-      status: "ok", 
+    res.json({
+      status: "ok",
       timestamp: new Date().toISOString(),
-      environment: env.NODE_ENV 
+      environment: env.NODE_ENV,
     });
   });
 
@@ -52,4 +63,3 @@ export const createApp = (): Application => {
 
   return app;
 };
-

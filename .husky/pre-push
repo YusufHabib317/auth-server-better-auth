@@ -1,0 +1,6 @@
+# Run full linting and type checking before push
+echo "Running full lint check..."
+yarn lint || exit 1
+
+echo "Running type check..."
+yarn type-check || exit 1

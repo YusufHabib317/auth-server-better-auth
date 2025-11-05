@@ -1,0 +1,7 @@
+# Run type checking
+echo "Running type check..."
+yarn type-check || exit 1
+
+# Run lint-staged
+echo "Running linting..."
+npx lint-staged
